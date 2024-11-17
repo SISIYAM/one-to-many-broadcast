@@ -6,9 +6,22 @@ const os = require("os");
 
 let senderStream;
 
-app.use(express.static("client"));
+// Set the view engine to EJS
+app.set("view engine", "ejs");
+app.set("views", "views");
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// render stream page
+app.get("/stream", (req, res) => {
+  res.render("stream");
+});
+
+// render viewer page
+app.get("/viewer", (req, res) => {
+  res.render("viewer");
+});
 
 app.post("/broadcast", async ({ body }, res) => {
   const peer = new webrtc.RTCPeerConnection({
@@ -70,7 +83,7 @@ app.post("/consumer", async ({ body }, res) => {
 app.listen(5000, () => {
   const networkInterfaces = os.networkInterfaces();
 
-  let localIpAddress = "localhost"; // Default fallback
+  let localIpAddress = "localhost";
   for (const interfaceName in networkInterfaces) {
     for (const net of networkInterfaces[interfaceName]) {
       if (net.family === "IPv4" && !net.internal) {
