@@ -66,7 +66,7 @@ app.post("/consumer", async ({ body }, res) => {
   const desc = new webrtc.RTCSessionDescription(body.sdp);
   await peer.setRemoteDescription(desc);
 
-  // add the tracks of the broadcaster's stream to the peer connection
+  // add the tracks of the broadcasters stream to the peer connection
   senderStream
     .getTracks()
     .forEach((track) => peer.addTrack(track, senderStream));
