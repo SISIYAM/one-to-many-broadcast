@@ -134,6 +134,7 @@
 
         const peer = createPeer();
         peer.addTransceiver("video", { direction: "recvonly" });
+        peer.addTransceiver("audio", { direction: "recvonly" });
       }
 
       function createPeer() {
@@ -163,7 +164,12 @@
       }
 
       function handleTrackEvent(e) {
-        document.getElementById("video").srcObject = e.streams[0];
+        const videoElement = document.getElementById("video");
+        videoElement.srcObject = e.streams[0];
+
+        videoElement
+          .play()
+          .catch((err) => console.error("Error playing video", err));
 
         document.getElementById("loading-spinner").style.display = "none";
       }

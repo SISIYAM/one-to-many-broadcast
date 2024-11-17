@@ -3,8 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Live Stream</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background: #f3f4f6;
+        color: #333;
+      }
+
+      #my-button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        transition: background-color 0.3s ease;
+      }
+
+      #my-button:hover {
+        background-color: #0056b3;
+      }
+
+      video {
+        width: 90%;
+        max-width: 600px;
+        border: 5px solid #ddd;
+        border-radius: 10px;
+        background: black;
+      }
+
+      @media (max-width: 768px) {
+        #my-button {
+          font-size: 0.9rem;
+          padding: 8px 16px;
+        }
+
+        video {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        #my-button {
+          font-size: 0.8rem;
+          padding: 6px 12px;
+        }
+      }
+    </style>
   </head>
   <body>
     <button id="my-button">Start Stream</button>
@@ -20,6 +76,7 @@
       async function init() {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: true,
+          audio: true,
         });
         document.getElementById("video").srcObject = stream;
         const peer = createPeer();

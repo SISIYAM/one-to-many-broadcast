@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const webrtc = require("wrtc");
+const os = require("os");
 
 let senderStream;
 
@@ -66,7 +67,21 @@ app.post("/consumer", async ({ body }, res) => {
   res.json(payload);
 });
 
-app.listen(5000, () =>
-  console.log(`Server running on http://localhost:5000/stream.html`)
-);
-console.log(`For Client view http://localhost:5000/viewer.html`);
+app.listen(5000, () => {
+  const networkInterfaces = os.networkInterfaces();
+
+  let localIpAddress = "localhost"; // Default fallback
+  for (const interfaceName in networkInterfaces) {
+    for (const net of networkInterfaces[interfaceName]) {
+      if (net.family === "IPv4" && !net.internal) {
+        localIpAddress = net.address;
+        break;
+      }
+    }
+    if (localIpAddress !== "localhost") break;
+  }
+
+  console.log(`Server is running on:`);
+  console.log(`- Local: http://localhost:5000`);
+  console.log(`- Network: http://${localIpAddress}:5000`);
+});
