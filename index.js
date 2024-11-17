@@ -95,6 +95,10 @@ app.listen(5000, () => {
   }
 
   console.log(`Server is running on:`);
-  console.log(`- Local: http://localhost:5000`);
-  console.log(`- Network: http://${localIpAddress}:5000`);
+  console.log(`- Local: http://localhost:5000/stream`);
+  console.log(`- Network: http://${localIpAddress}:5000/stream`);
+
+  console.log(`Url for viewer:`);
+  console.log(`- Local: http://localhost:5000/viewer`);
+  console.log(`- Network: http://${localIpAddress}:5000/viewer`);
 });
